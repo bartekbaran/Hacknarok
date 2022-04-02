@@ -1,3 +1,3 @@
 export const getResolution = () => {
-  return {width: window.screen.availWidth, height: window.screen.availHeight}
+  return {width: (window.innerWidth / 2).toString() + 'px', height: window.innerHeight + 'px'}
 }

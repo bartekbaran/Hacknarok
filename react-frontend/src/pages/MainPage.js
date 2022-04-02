@@ -1,12 +1,20 @@
 import React from 'react';
-import MyComponent from "../components/GoogleMap";
-import Map from "../components/GoogleMap";
+import GoogleMap from "../components/GoogleMap";
+import "../styles/mainPage.css"
+import List from "../components/List"
+
 
 const MainPage = () => {
   return (
-    <div>
-      <Map />
+    <div className="container">
+      <div className="map">
+        <GoogleMap/>
+      </div>
+      <div className="list">
+        <List/>
+      </div>
     </div>
+
   );
 };
 
