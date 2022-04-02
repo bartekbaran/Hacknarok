@@ -1,12 +1,11 @@
-import React from 'react';
-import Authentication from "../pages/Authentication";
+import React from "react";
 
 const Test = () => {
   return (
     <div>
-      <Authentication/>
+      XDDDDDDDDDDD test
     </div>
-  );
-};
+  )
+}
 
 export default Test;
