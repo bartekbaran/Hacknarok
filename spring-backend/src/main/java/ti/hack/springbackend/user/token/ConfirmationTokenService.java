@@ -22,17 +22,11 @@ public class ConfirmationTokenService {
         LOGGER.info("saveConfirmationToken() saving token={}", token);
 
         if (this.confirmationTokenRepository.findByToken(token.getToken()).isPresent()) {
-            LOGGER.info("token={} is already taken", token);
-            throw new TokenException.TokenAlreadyTakenException(token.getToken());
+            LOGGER.info("saveConfirmationToken() token={} already exists", token);
+            throw new TokenException.TokenAlreadyExistsException(token.getToken());
         }
 
         this.confirmationTokenRepository.save(token);
-    }
-
-    public ConfirmationToken getToken(final String token) {
-        LOGGER.debug("getToken() getting token={}", token);
-        return confirmationTokenRepository.findByToken(token).orElse(null);
-
     }
 
     public Long setConfirmed(final String token) {
@@ -42,18 +36,18 @@ public class ConfirmationTokenService {
 
         final Optional<ConfirmationToken> optionalConfirmationToken = this.confirmationTokenRepository.findByToken(token);
 
-        if (optionalConfirmationToken.isPresent()) {
-            return optionalConfirmationToken.get().getUid();
+        if (optionalConfirmationToken.isEmpty()) {
+            LOGGER.warn("setConfirmed() token={}, doesn't exist", token);
+            throw new TokenException.TokenNotFoundException(token);
         }
-        LOGGER.warn("setConfirmed() token={}, doesn't exist", token);
-        return null;
 
+        return optionalConfirmationToken.get().getUid();
     }
 
     public String createConfirmationToken(final Long userId) {
         final String token = UUID.randomUUID().toString();
 
-        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), userId);
+        final ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), null, userId);
         saveConfirmationToken(confirmationToken);
 
         return token;

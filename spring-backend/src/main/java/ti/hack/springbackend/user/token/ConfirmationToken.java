@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class ConfirmationToken {
 
     @Id
+    @Column(name = "id", nullable = false)
     @SequenceGenerator(name="token_id_seq", sequenceName = "token_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_id_seq")
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "token", nullable = false)
@@ -35,8 +35,9 @@ public class ConfirmationToken {
     @Column(name = "uid", nullable = false)
     private Long uid;
 
-    ConfirmationToken(String token, LocalDateTime expires, LocalDateTime confirmed, Long uid){
+    ConfirmationToken(String token, LocalDateTime created, LocalDateTime expires, LocalDateTime confirmed, Long uid){
         this.token = token;
+        this.created = created;
         this.expires = expires;
         this.confirmed = confirmed;
         this.uid = uid;

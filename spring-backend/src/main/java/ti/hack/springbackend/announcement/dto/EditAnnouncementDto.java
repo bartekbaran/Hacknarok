@@ -1,0 +1,21 @@
+package ti.hack.springbackend.announcement.dto;
+
+import lombok.Data;
+import ti.hack.springbackend.announcement.AnnouncementSideEnum;
+import ti.hack.springbackend.announcement.AnnouncementTypeEnum;
+
+@Data
+public class EditAnnouncementDto {
+
+    private final Long announcementId;
+    private final String title;
+    private final String content;
+    private final AnnouncementTypeEnum category;
+    private final AnnouncementSideEnum side;
+    private final String url;
+    private final boolean isValid;
+    private final String location;
+    private final Float latitude;
+    private final Float longitude;
+
+}

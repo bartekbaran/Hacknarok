@@ -23,4 +23,28 @@ public class UserException extends RuntimeException {
             super(String.format("User with nickname=%s is already taken", nickname));
         }
     }
+
+    public static class UserNotFoundException extends UserException {
+        public UserNotFoundException(final String email) {
+            super(String.format("No user found for email=%s", email));
+        }
+    }
+
+    public static class PasswordDoNotMatchException extends UserException {
+        public PasswordDoNotMatchException() {
+            super("Passwords doesn't match");
+        }
+    }
+
+    public static class UserNotActiveException extends UserException {
+        public UserNotActiveException(final String email) {
+            super(String.format("User with email=%s, is not confirmed", email));
+        }
+    }
+
+    public static class InvalidPermissionsException extends UserException {
+        public InvalidPermissionsException() {
+            super("Invalid permission to do that action!");
+        }
+    }
 }
