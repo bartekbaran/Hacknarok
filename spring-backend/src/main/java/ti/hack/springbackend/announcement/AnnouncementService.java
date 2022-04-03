@@ -72,5 +72,17 @@ public class AnnouncementService {
                                    final Long announcementId) {
         LOGGER.info("deleteAnnouncement() delete announcement with id={}", announcementId);
 
+        final Optional<Announcement> optionalAnnouncement = this.announcementRepository.findByAnnouncementId(announcementId);
+        if (optionalAnnouncement.isEmpty()) {
+            LOGGER.info("deleteAnnouncement() there's no announcement with id={}", announcementId);
+            throw new AnnouncementException.AnnoucementNotFoundException(announcementId);
+        }
+
+        if (!optionalAnnouncement.get().getEmail().equals(authentication.getName())) {
+            LOGGER.info("deleteAnnouncement() logged user cannot change this post");
+            throw new UserException.InvalidPermissionsException();
+        }
+
+        this.announcementRepository.deleteAnnouncementByAnnouncementId(announcementId);
     }
 }

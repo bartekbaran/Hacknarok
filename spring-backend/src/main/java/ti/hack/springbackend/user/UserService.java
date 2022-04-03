@@ -58,8 +58,9 @@ public class UserService {
 
         final String encryptedPassword = passwordEncoder.encode(registerDto.getPassword());
 
-        final User createdUser = new User(registerDto.getEmail(), registerDto.getNickname(),
-                encryptedPassword, UserRole.USER.toString(), new Date(), null, false);
+        final User createdUser = new User(registerDto.getEmail(), registerDto.getNickname(), registerDto.getFirstname(),
+                registerDto.getLastname(), registerDto.getPhoneNumber(), encryptedPassword,
+                UserRole.USER.toString(), LocalDateTime.now(), null, false);
 
         this.userRepository.save(createdUser);
         LOGGER.debug("createUser() user created successfully!");
